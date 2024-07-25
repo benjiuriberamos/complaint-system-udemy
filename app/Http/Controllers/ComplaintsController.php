@@ -2,33 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ComplaintsDataTable;
+use App\Models\Complaints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Services\DataTable;
 
 class ComplaintsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, ComplaintsDataTable $dataTable)
     {
-        $status = 'Todos';
-        $priority = 'Todos';
-        $category = 'Todos';
+        return $dataTable->render('admin.complaints.index');
+        // $status = 'Todos';
+        // $priority = 'Todos';
+        // $category = 'Todos';
 
-        $complaints = DB::table('complaints')
-                        ->select('complaints.*')
-                        ->orderBy('id', 'ASC')
-                        ->get();
+        // $complaints = DB::table('complaints')
+        //                 ->select('complaints.*')
+        //                 ->orderBy('id', 'ASC')
+        //                 ->get();
 
-        return view('admin.complaints.index', [
-            'complaints' => $complaints,
-            'status' => $status,
-            'priority' => $priority,
-            'category' => $category,
-        ]);
+        // return view('admin.complaints.index', [
+        //     'complaints' => $complaints,
+        //     'status' => $status,
+        //     'priority' => $priority,
+        //     'category' => $category,
+        // ]);
         //
     }
+
 
     /**
      * Show the form for creating a new resource.
