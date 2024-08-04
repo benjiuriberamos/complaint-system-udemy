@@ -1,7 +1,6 @@
 @extends('layouts.adminlte-dashboard')
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
 @endsection
 
 @section('content')

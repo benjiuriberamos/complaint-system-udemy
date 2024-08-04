@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\ComplaintsDataTable;
+use App\Models\User;
 use App\Models\Complaints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\DataTables\ComplaintsDataTable;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Facades\DataTables;
 
 class ComplaintsController extends Controller
 {
@@ -25,6 +27,7 @@ class ComplaintsController extends Controller
      */
     public function index(Request $request, ComplaintsDataTable $dataTable)
     {
+
         return $dataTable->render('admin.complaints.index');
         // $status = 'Todos';
         // $priority = 'Todos';

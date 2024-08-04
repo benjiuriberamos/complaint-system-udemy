@@ -34,7 +34,7 @@ class HomeController extends Controller
             $num_complaints = Complaints::where('status', '!=', 'Resuelto')
                 ->count();
 
-        if ($user->isSupervisor())
+        else 
             $num_complaints = Complaints::where('status', '!=', 'Resuelto')
                 ->where('id_user', $user_id)
                 ->count();

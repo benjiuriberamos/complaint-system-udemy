@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Complaints;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -21,8 +22,13 @@ class ComplaintsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        /** @var User */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) $query->where('id_user', Auth::id());
+
         return (new EloquentDataTable($query))
-            // ->addColumn('action', 'complaints.action')
+            ->addColumn('action', 'complaints.action')
             ->setRowId('id');
     }
 

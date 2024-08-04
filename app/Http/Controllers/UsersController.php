@@ -12,7 +12,22 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $status = 'Todos';
+        $priority = 'Todos';
+        $category = 'Todos';
+
+        $complaints = DB::table('complaints')
+                        ->select('complaints.*')
+                        ->orderBy('id', 'ASC')
+                        ->get();
+
+        return view('admin.complaints.index', [
+            'complaints' => $complaints,
+            'status' => $status,
+            'priority' => $priority,
+            'category' => $category,
+        ]);
+        
     }
 
     /**

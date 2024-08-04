@@ -3,9 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -53,15 +54,20 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        if ($this->role->type_user == 'Administrador') 
+        if ($this->role?->type_user == 'Administrador') 
             return true;
         return false;
     }
 
     public function isSupervisor(): bool
     {
-        if ($this->role->type_user == 'Supervisor') 
+        if ($this->role?->type_user == 'Supervisor') 
             return true;
         return false;
+    }
+
+    public function getMemberSinceAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('M. Y');
     }
 }
