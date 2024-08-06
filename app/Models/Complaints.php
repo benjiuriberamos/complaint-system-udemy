@@ -15,6 +15,7 @@ class Complaints extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'owner_name',
         'email',
         'context',

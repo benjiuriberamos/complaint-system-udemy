@@ -25,26 +25,13 @@ class ComplaintsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ComplaintsDataTable $dataTable)
+    public function index(Request $request)
     {
-
-        return $dataTable->render('admin.complaints.index');
-        // $status = 'Todos';
-        // $priority = 'Todos';
-        // $category = 'Todos';
-
-        // $complaints = DB::table('complaints')
-        //                 ->select('complaints.*')
-        //                 ->orderBy('id', 'ASC')
-        //                 ->get();
-
-        // return view('admin.complaints.index', [
-        //     'complaints' => $complaints,
-        //     'status' => $status,
-        //     'priority' => $priority,
-        //     'category' => $category,
-        // ]);
-        //
+        $complaints = Complaints::query()
+            //->orderBy('created_at', 'asc')
+             ->orderBy('id', 'desc')
+            ->get();
+        return view('admin.complaints.index', ['collection' => $complaints]);
     }
 
 
