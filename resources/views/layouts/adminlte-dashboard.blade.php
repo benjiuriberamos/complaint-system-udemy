@@ -74,6 +74,7 @@
             cardHeader.style.cursor = "move";
         });
     </script><!--end::Script-->
+    @include('sweetalert::alert')
     @yield('javascript')
 </body><!--end::Body-->
 

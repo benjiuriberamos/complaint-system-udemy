@@ -7,8 +7,9 @@ use App\Models\Complaints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\ComplaintsDataTable;
-use Yajra\DataTables\Services\DataTable;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Services\DataTable;
 
 class ComplaintsController extends Controller
 {
@@ -28,9 +29,13 @@ class ComplaintsController extends Controller
     public function index(Request $request)
     {
         $complaints = Complaints::query()
-            //->orderBy('created_at', 'asc')
-             ->orderBy('id', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
+        
+        if (session('success_message')) {
+            Alert::alert('Title', 'Message', 'Type');
+        }
+
         return view('admin.complaints.index', ['collection' => $complaints]);
     }
 
@@ -48,7 +53,10 @@ class ComplaintsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        redirect()
+        ->route('complaints.index')
+        ->withSuccessMessage('Se agrego exitosamente');
     }
 
     /**

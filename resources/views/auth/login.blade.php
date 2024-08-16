@@ -60,12 +60,12 @@
                         </div> <!-- /.col -->
                     </div> <!--end::Row-->
                 </form>
-                {{-- <div class="social-auth-links text-center mb-3 d-grid gap-2">
-                    <p>- OR -</p> <a href="#" class="btn btn-primary"> <i class="bi bi-facebook me-2"></i> Sign in using Facebook
-                    </a> <a href="#" class="btn btn-danger"> <i class="bi bi-google me-2"></i> Sign in using Google+
-                    </a>
-                </div> <!-- /.social-auth-links --> --}}
-                <p class="mb-1"> <a href="{{ route('password.request') }}">I forgot my password</a> </p>
+                <div class="social-auth-links text-center mb-3 d-grid gap-2">
+                    <p>- OR -</p> 
+                    <a href="#" class="btn btn-primary"> <i class="bi bi-facebook me-2"></i> Sign in using Facebook</a> 
+                    <a href="{{ GoogleLoginService::generateUrlLogin() }}" class="btn btn-danger"> <i class="bi bi-google me-2"></i> Sign in using Google+</a>
+                </div> <!-- /.social-auth-links -->
+                <p class="mb-1"><a href="{{ route('password.request') }}">I forgot my password</a></p>
                 <p class="mb-0">
                     <a href="{{ route('register') }}" class="text-center">
                         Register a new membership

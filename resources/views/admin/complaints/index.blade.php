@@ -33,7 +33,7 @@
                         <td>{{ Carbon\Carbon::parse($item->created_at)->format('d M. Y') }}</td>
                         <td>
                             <a href="{{ route('complaints.update', ['complaint'=>$item->id]) }}" class="btn btn-primary">Editar</a>
-                            <a href="{{ route('complaints.destroy', ['complaint'=>$item->id]) }}" class="btn btn-danger">Eliminar</a>
+                            <a href="{{ route('complaints.destroy', ['complaint'=>$item->id]) }}" class="btn btn-danger" data-confirm-delete="true">Eliminar</a>
                         </td>
                     </tr>
                     @endforeach
@@ -64,5 +64,7 @@
             },
             ordering:  true
         });
+
+
     </script>
 @endsection
