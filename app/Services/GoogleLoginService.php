@@ -15,6 +15,7 @@ class GoogleLoginService
     private string $redirecturl;
 
     public function __construct() {
+        //Setting params for get data of gmail account
         $this->clientid = env('CLIENT_ID', null);
         $this->secretclient = env('SECRET_CLIENT', null);
         $this->redirecturl = env('REDIRECT_URL', null);
