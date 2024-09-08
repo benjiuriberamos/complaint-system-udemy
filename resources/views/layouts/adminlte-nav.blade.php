@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+    $user = auth()->user();
 @endphp
 <nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
     <div class="container-fluid"> <!--begin::Start Navbar Links-->

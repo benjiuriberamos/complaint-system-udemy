@@ -28,9 +28,10 @@ class ComplaintsController extends Controller
      */
     public function index(Request $request)
     {
-        $complaints = Complaints::query()
-            ->orderBy('id', 'desc')
-            ->get();
+        $qb = Complaints::query()
+            ->orderBy('id', 'desc');
+
+        $complaints = $qb->get();
         
         if (session('success_message')) {
             Alert::alert('Title', 'Message', 'Type');

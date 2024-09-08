@@ -123,9 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'aliases' => [
-        // Otros alias...
-        'GoogleLoginService' => App\Facades\GoogleLoginFacade::class,
-    ],
 
 ];

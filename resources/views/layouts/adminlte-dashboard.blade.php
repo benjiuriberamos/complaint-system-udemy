@@ -1,6 +1,6 @@
 
 @php
-    $user = Auth::user();
+    $user = auth()->user();
 @endphp
 <!DOCTYPE html>
 <html lang="en"> <!--begin::Head-->

@@ -2,13 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Complaints;
 use App\Models\User;
+use App\Models\Complaints;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DatabaseSeeder extends Seeder
 {
+    use RefreshDatabase;
+
     /**
      * Seed the application's database.
      */
@@ -20,8 +23,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call(UsersSeeder::class);
+        // $this->call(UsersSeeder::class);
         $this->call(ComplaintsSeeder::class);
-        $this->call(RolesSeeder::class);
+        // $this->call(RolesSeeder::class);
     }
 }

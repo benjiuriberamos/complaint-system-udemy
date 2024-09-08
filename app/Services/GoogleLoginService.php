@@ -31,6 +31,7 @@ class GoogleLoginService
         $client->addScope('email');
         $client->addScope('profile');
 
+        return '/';
         if (! isset($_GET['code'])) {
             return $client->createAuthUrl();
             // header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));
@@ -41,7 +42,7 @@ class GoogleLoginService
             // Obtener la información del perfil del usuario
             $oauth2 = new \Google\Service\Oauth2($client);
             $userInfo = $oauth2->userinfo->get();
-            return $userInfo;
+            // return $userInfo;
             $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/';
             return 'Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL);
             // header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));

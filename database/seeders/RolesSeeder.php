@@ -4,10 +4,13 @@ namespace Database\Seeders;
 
 use App\Models\Roles;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RolesSeeder extends Seeder
 {
+    use RefreshDatabase;
+    
     /**
      * Run the database seeds.
      */

@@ -2,7 +2,7 @@
 
 @section('content')
 @php
-    $user = Auth::user();
+    $user = auth()->user();
 @endphp
 <!--begin::App Content-->
 <div class="app-content"> <!--begin::Container-->
