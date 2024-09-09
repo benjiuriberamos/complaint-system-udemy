@@ -7,6 +7,7 @@ use App\Models\Complaints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\ComplaintsDataTable;
+use App\Http\Requests\ComplaintsRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Services\DataTable;
@@ -28,14 +29,11 @@ class ComplaintsController extends Controller
      */
     public function index(Request $request)
     {
-        $qb = Complaints::query()
-            ->orderBy('id', 'desc');
+        $complaints = Complaints::query()
+            ->orderBy('id', 'desc')
+            ->get();
 
-        $complaints = $qb->get();
-        
-        if (session('success_message')) {
-            Alert::alert('Title', 'Message', 'Type');
-        }
+        confirmDelete('Eliminar reclamo/queja!', '¿Estás seguro qué deseas eliminar este reclamo?');
 
         return view('admin.complaints.index', ['collection' => $complaints]);
     }
@@ -46,18 +44,25 @@ class ComplaintsController extends Controller
      */
     public function create()
     {
-        //
+        $users = DB::table('users')
+                    ->where('role_id', '2')
+                    ->get();
+        return view('admin.complaints.form', ['users' => $users, 'complaint' => new Complaints()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ComplaintsRequest $request)
     {
+
+        $validated = $request->validated();
+        $complaint = Complaints::create(array_merge($validated, ['status' => Complaints::STATUS_INIT]));
         
-        redirect()
-        ->route('complaints.index')
-        ->withSuccessMessage('Se agrego exitosamente');
+        alert()->success('Registro exitoso', `Se agrego el reclamo  $complaint->id.`);
+
+        return redirect()
+            ->route('complaints.index');
     }
 
     /**
@@ -73,15 +78,28 @@ class ComplaintsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $users = DB::table('users')
+                    ->where('role_id', '2')
+                    ->get();
+
+        $complaint = Complaints::where('id', $id)->first();
+
+        return view('admin.complaints.form', ['users' => $users, 'complaint' => $complaint]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ComplaintsRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+        $complaint = Complaints::find($id);
+        $complaint->update($validated);
+
+        alert()->success('Reclamo actualizado', `Se actualizo el reclamo  $id.`);
+
+        return redirect()
+            ->route('complaints.index');
     }
 
     /**
@@ -89,6 +107,10 @@ class ComplaintsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Complaints::deleted($id);
+        alert()->success('Reclamo eliminado', `Se elimino el reclamo  $id.`);
+
+        return redirect()
+            ->route('complaints.index');
     }
 }

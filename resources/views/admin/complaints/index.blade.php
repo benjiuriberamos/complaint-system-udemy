@@ -12,7 +12,7 @@
                     <h6>Listado de quejas</h6>
                 </div>
                 <div class="col-5 d-flex justify-content-end">
-                    <a href="" class="btn btn-primary r-0">Crear</a>
+                    <a href="{{ route('complaints.create')}}" class="btn btn-primary r-0">Crear</a>
                 </div>
             </div>
         </div>
@@ -41,8 +41,8 @@
                         <td>{{ $item->category }}</td>
                         <td>{{ Carbon\Carbon::parse($item->created_at)->format('d M. Y') }}</td>
                         <td>
-                            <a href="{{ route('complaints.update', ['complaint'=>$item->id]) }}" class="btn btn-primary">Editar</a>
-                            <a href="{{ route('complaints.destroy', ['complaint'=>$item->id]) }}" class="btn btn-danger" data-confirm-delete="true">Eliminar</a>
+                            <a href="{{ route('complaints.edit', ['complaint' => $item->id]) }}" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="{{ route('complaints.destroy', ['complaint' => $item->id]) }}" class="btn btn-danger btn-sm" data-confirm-delete="true">Eliminar</a>
                         </td>
                     </tr>
                     @endforeach

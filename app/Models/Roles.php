@@ -9,6 +9,10 @@ class Roles extends Model
 {
     use HasFactory;
 
+    public const ROL_ADMIN = 'Administrador';
+    public const ROL_SUPERVISOR = 'Supervisor';
+    public const ROL_TYPES = [self::ROL_ADMIN, self::ROL_SUPERVISOR];
+
     /**
      * The attributes that are mass assignable.
      *

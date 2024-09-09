@@ -17,6 +17,6 @@ class ComplaintsSeeder extends Seeder
     public function run(): void
     {
         //
-        Complaints::factory(100)->create();
+        Complaints::factory(700)->create();
     }
 }

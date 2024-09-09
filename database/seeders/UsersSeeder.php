@@ -33,5 +33,7 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('98738534'),
             'image_perfil' => 'foto.jpg',
         ]);
+
+        User::factory(10)->create();
     }
 }

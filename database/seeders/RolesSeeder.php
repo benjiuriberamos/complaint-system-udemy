@@ -16,11 +16,10 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        Roles::create([
-            'type_user' => 'Administrador'
-        ]);
-        Roles::create([
-            'type_user' => 'Supervisor'
-        ]);
+        foreach (Roles::ROL_TYPES as $value) {
+            Roles::create([
+                'type_user' => $value
+            ]);
+        }
     }
 }

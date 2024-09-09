@@ -12,13 +12,14 @@ class ComplaintsFactory extends Factory
 
     public function definition()
     {
+        $complainst = new Complaints();
         return [
             'owner_name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'context' => $this->faker->sentence,
-            'status' => $this->faker->randomElement(['pendiente', 'rechazado', 'culminado']),
-            'priority' => $this->faker->randomElement(['Baja', 'Media', 'Alta']),
-            'category' => $this->faker->randomElement(['Servicios', 'Otros', 'Tráfico de drogas']),
+            'status' => $this->faker->randomElement(Complaints::STATUS_TYPES),
+            'priority' => $this->faker->randomElement(Complaints::PRIORITY_TYPES),
+            'category' => $this->faker->randomElement(Complaints::CATEGORY_TYPES),
             'id_user' => User::inRandomOrder()->first()->id,
             // 'id_user' => \App\Models\User::factory(),
         ];
