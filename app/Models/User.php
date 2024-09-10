@@ -54,14 +54,14 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        if ($this->role?->type_user == 'Administrador') 
+        if ($this->role?->type_user == Roles::ROL_ADMIN) 
             return true;
         return false;
     }
 
     public function isSupervisor(): bool
     {
-        if ($this->role?->type_user == 'Supervisor') 
+        if ($this->role?->type_user == Roles::ROL_SUPERVISOR) 
             return true;
         return false;
     }

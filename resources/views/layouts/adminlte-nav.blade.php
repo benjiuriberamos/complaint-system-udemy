@@ -29,7 +29,14 @@
                     </li>  --}}
                     <li class="user-footer">
                         <a href="#" class="btn btn-default btn-flat">Mi perfil</a>
-                        <a href="#" class="btn btn-default btn-flat float-end">Salir</a>
+                        <a class="btn btn-default btn-flat float-end" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Salir') }}
+                                    </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </li> <!--end::User Menu Dropdown-->

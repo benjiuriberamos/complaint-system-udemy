@@ -47,18 +47,6 @@
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Prioridad</th>
-                        <th>Estado</th>
-                        <th>Categoria</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     </div>

@@ -50,7 +50,11 @@ class ComplaintsController extends Controller
         $users = DB::table('users')
                     ->where('role_id', '2')
                     ->get();
-        return view('admin.complaints.form', ['users' => $users, 'complaint' => new Complaints()]);
+
+        $data['users'] = $users;
+        $data['complaint'] = new Complaints();
+        $data['comments'] = [];
+        return view('admin.complaints.form', $data);
     }
 
     /**

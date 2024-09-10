@@ -8,11 +8,18 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="col-7">
+                <div class="col-md-10">
                     <h6>Reportes</h6>
                 </div>
-                <div class="col-5 d-flex justify-content-end">
-                    <a href="{{ route('complaints.create')}}" class="btn btn-primary r-0">Crear</a>
+                <div class="col-md-2">
+                    <form action="{{ route('reports.index') }}" method="GET" id="form-export">
+                        @csrf
+                        <input type="hidden" name="status" id="export_status" value="{{ $status}}">
+                        <input type="hidden" name="category" id="export_category" value="{{ $category}}">
+                        <input type="hidden" name="date_start" id="export_date_start" value="{{ $date_start}}">
+                        <input type="hidden" name="date_end" id="export_date_end" value="{{ $date_end}}">
+                        <input type="submit" name="download_report" class="btn btn-success" value="Imprimir reporte">
+                    </form>
                 </div>
             </div>
         </div>
@@ -57,38 +64,26 @@
                             <th>Email</th>
                             <th>Prioridad</th>
                             <th>Estado</th>
-                            <th>Categoria</th>
-                            <th>Fecha</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($complaints as $item)
                         <tr>
                             <td>{{ $item->id }}</td>
-                            <td>{{ $item->owner_name }}</td>
-                            <td>{{ $item->email }}</td>
                             <td>{{ $item->priority }}</td>
                             <td>{{ $item->status }}</td>
                             <td>{{ $item->category }}</td>
                             <td>{{ Carbon\Carbon::parse($item->created_at)->format('d M. Y') }}</td>
-                            <td>
-                                <a href="{{ route('complaints.edit', ['complaint' => $item->id]) }}" class="btn btn-primary btn-sm">Editar</a>
-                                <a href="{{ route('complaints.destroy', ['complaint' => $item->id]) }}" class="btn btn-danger btn-sm" data-confirm-delete="true">Eliminar</a>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
                             <th>Prioridad</th>
                             <th>Estado</th>
                             <th>Categoria</th>
                             <th>Fecha</th>
-                            <th>Acciones</th>
                         </tr>
                     </tfoot>
                 </table>

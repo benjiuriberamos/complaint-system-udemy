@@ -6,6 +6,9 @@ use App\Models\Complaints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Exports\ReportsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ReportsController extends Controller
 {
 
@@ -59,6 +62,10 @@ class ReportsController extends Controller
         $data['date_start'] = $date_start;
         $data['date_end'] = $date_end;
 
+        if($request->input('download_report', '')) {
+            return Excel::download(new ReportsExport([$complaints]), 'reports.xlsx');
+        }
+        
         return view('admin.reports.index', $data);
 
     }
