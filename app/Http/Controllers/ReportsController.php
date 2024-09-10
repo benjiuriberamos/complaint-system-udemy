@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Complaints;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportsController extends Controller
 {
@@ -20,9 +22,45 @@ class ReportsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        /** @var App\Models\User */
+        $user = Auth::user();
+
+        $status = $request->query->get('status', '');
+        $category = $request->query->get('category', '');
+        $date_start = $request->query->get('date_start', '');
+        $date_end = $request->query->get('date_end', '');
+
+        if ($user->isAdmin()) {
+            $query = Complaints::orderBy('id', 'DESC');
+        } else {
+            $query = Complaints::orderBy('id', 'DESC')->where('id_user', $user->id);
+        }
+
+        if ($status) {
+            $query = $query->where('status', '=', $status);
+        }
+        if ($category) {
+            $query = $query->where('category', '=', $category);
+        }
+        if ($date_start) {
+            $query = $query->where('created_at', '>=',  $date_start);
+        }
+        if ($date_end) {
+            $query = $query->where('created_at', '<=', $date_end);
+        }
+
+        $complaints = $query->get();
+
+        $data['complaints'] = $complaints;
+        $data['status'] = $status;
+        $data['category'] = $category;
+        $data['date_start'] = $date_start;
+        $data['date_end'] = $date_end;
+
+        return view('admin.reports.index', $data);
+
     }
 
     /**

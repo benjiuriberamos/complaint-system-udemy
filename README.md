@@ -52,3 +52,9 @@ php artisan make:controller
 benjiuriberamos@gmail.com
 
 This software is available in [http://sistema-quejas.benjadev.xyz](http://sistema-quejas.benjadev.xyz)
+
+Users test:
+
+Usuario supervisor: benjiuriberamos@gmail.com    Password: 123456789
+
+Usuario admin: admin@gmail.com    Password: admin

@@ -36,6 +36,8 @@ class ComplaintsRequest extends FormRequest
                 Rule::in(Complaints::CATEGORY_TYPES),
             ],
             'id_user' => 'exists:App\Models\User,id',
+            'comment' => 'max:5000',
+            'status' => Rule::in(Complaints::STATUS_TYPES),
         ];
     }
 }

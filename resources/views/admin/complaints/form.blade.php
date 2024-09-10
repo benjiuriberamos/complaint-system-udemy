@@ -29,18 +29,20 @@
                                 Selecciona la prioridad del reclamo/queja.
                             </div>
                         </div>
-                        <div class="col-4"> 
-                            <label for="category" class="form-label">Categoría:</label>
-                            <select class="form-select" aria-label="Seleccione" id="category" name="category" aria-describedby="category_help">
-                                <option @if(old('category') == '') selected @endif>Seleccione</option>
-                                @foreach (App\Models\Complaints::CATEGORY_TYPES as $value)
-                                    <option value="{{ $value }}" @if(old('category', $complaint->category) == $value) selected @endif>{{ $value }}</option>
-                                @endforeach
-                            </select>
-                            <div id="category_help" class="form-text @error('category') text-danger @enderror">
-                                Selecciona la categoría del reclamo/queja.
+                        @if ($complaint->exists)
+                            <div class="col-4"> 
+                                <label for="category" class="form-label">Categoría:</label>
+                                <select class="form-select" aria-label="Seleccione" id="category" name="category" aria-describedby="category_help">
+                                    <option @if(old('category') == '') selected @endif>Seleccione</option>
+                                    @foreach (App\Models\Complaints::CATEGORY_TYPES as $value)
+                                        <option value="{{ $value }}" @if(old('category', $complaint->category) == $value) selected @endif>{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="category_help" class="form-text @error('category') text-danger @enderror">
+                                    Selecciona la categoría del reclamo/queja.
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="col-4"> 
                             <label for="id_user" class="form-label">Usuario:</label>
                             <select class="form-select" aria-label="Seleccione" id="id_user" name="id_user" aria-describedby="id_user_help">
@@ -53,6 +55,18 @@
                                 Selecciona el usuario que gestionara el reclamo/queja.
                             </div>
                         </div>
+                    </div>
+                    <div class="mb-3"> 
+                        <label for="status" class="form-label">Estado:</label>
+                            <select class="form-select" aria-label="Seleccione" id="status" name="status" aria-describedby="status_help">
+                                <option @if(old('status') == '') selected @endif>Seleccione</option>
+                                @foreach (App\Models\Complaints::STATUS_TYPES as $value)
+                                    <option value="{{ $value }}" @if( old('status', $complaint->status) == $value) selected @endif>{{ $value }}</option>
+                                @endforeach
+                            </select>
+                            <div id="status_help" class="form-text @error('status') text-danger @enderror">
+                                Selecciona el estado el reclamo/queja.
+                            </div>
                     </div>
                     <div class="mb-3"> 
                         <label for="owner_name" class="form-label">Nombre completo:</label>
@@ -80,6 +94,40 @@
                             Ingresa una detallada desripción de reclamo/queja.
                         </div>
                     </div>
+                    @if (Auth::user()->isAdmin())
+                    <div class="mb-3">
+                        @php
+                            $num_comments = count($comments);
+                        @endphp
+                        <strong>Comentarios</strong><br>
+                        @if ($num_comments > 0)
+                            @foreach ($comments as $comment)
+                                <div class="m-3">
+                                    <strong>{{ $comment->name }}</strong><br>
+                                    <label for="">{{ $comment->fecha }}</label>
+                                    <p>{{ $comment->comment}}</p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No hay comentarios.</p>
+                        @endif
+                        <hr>
+                        <div class="mb-3">
+                            {{-- <label for="comment" class="mb-2">Ingresa un comentario:</label> --}}
+                            <textarea class="form-control" 
+                                placeholder="Ingresa un comentario" 
+                                id="comment" 
+                                name="comment" 
+                                aria-describedby="comment_help" 
+                                style="height: 120px">{{ old('comment') }}</textarea>
+                            <div id="comment_help" class="form-text @error('comment') text-danger @enderror">
+                                Ingresa un comentario
+                            </div>
+                        </div>
+                    </div>
+                    @else
+                        <strong>Solo los administradores pueden insertar comentarios</strong>
+                    @endif
                 </div>
                 <div class="card-footer"> 
                     <button type="submit" class="btn btn-primary">{{ $complaint->exists ? 'Actualizar' : 'Guardar' }}</button>

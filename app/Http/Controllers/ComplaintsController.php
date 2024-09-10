@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Comments;
 use App\Models\Complaints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\DataTables\ComplaintsDataTable;
 use App\Http\Requests\ComplaintsRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Services\DataTable;
+use Egulias\EmailValidator\Parser\Comment;
 
 class ComplaintsController extends Controller
 {
@@ -82,9 +85,22 @@ class ComplaintsController extends Controller
                     ->where('role_id', '2')
                     ->get();
 
+        $comments = DB::table('comments')
+                    ->join('complaints', 'comments.id_complaint', '=', 'complaints.id')
+                    ->join('users', 'comments.id_user', '=', 'users.id')
+                    ->select('comments.*', 'comments.created_at as fecha', 'complaints.*', 'users.*')
+                    ->where('comments.id_complaint', $id)
+                    ->orderBy('comments.id', 'DESC')
+                    ->get();
+
         $complaint = Complaints::where('id', $id)->first();
 
-        return view('admin.complaints.form', ['users' => $users, 'complaint' => $complaint]);
+        $data = [
+            'users' => $users, 
+            'complaint' => $complaint,
+            'comments' => $comments,
+        ];
+        return view('admin.complaints.form', $data);
     }
 
     /**
@@ -95,6 +111,14 @@ class ComplaintsController extends Controller
         $validated = $request->validated();
         $complaint = Complaints::find($id);
         $complaint->update($validated);
+
+        if ( $request->input('comment') ) {
+            Comments::create([
+                'comment' => $validated['comment'],
+                'id_user' => Auth::user()->id,
+                'id_complaint' => $complaint->id,
+            ]);
+        }
 
         alert()->success('Reclamo actualizado', `Se actualizo el reclamo  $id.`);
 
